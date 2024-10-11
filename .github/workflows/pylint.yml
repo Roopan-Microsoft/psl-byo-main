@@ -38,7 +38,7 @@ jobs:
     - - name: shellcheck
         shell: cmd
         run: |
-          call ${{ github.workspace}}/ClientAdvisor/App/test.cmd
+          ${{ github.workspace}}/ClientAdvisor/App/test.cmd
     - name: Analysing the code with pylint
       run: |
         pylint $(git ls-files '*.py')
