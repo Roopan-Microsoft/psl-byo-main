@@ -35,10 +35,6 @@ jobs:
         pip install black==24.8.0
         pip install autoflake==2.3.1
         pip install isort==5.13.2
-    - - name: shellcheck
-        shell: cmd
-        run: |
-          ${{ github.workspace}}/ClientAdvisor/App/test.cmd
     - name: Analysing the code with pylint
       run: |
         pylint $(git ls-files '*.py')
