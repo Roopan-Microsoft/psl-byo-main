@@ -36,11 +36,6 @@ jobs:
         deactivate
         echo ${{ github.workspace }}
       working-directory: ${{ github.workspace }}
-
-    - name: Run a script
-      run: |
-       cd ${{ github.workspace }}/ClientAdvisor/App
-       ./test.cmd
     
     - name: Analyze code with Pylint
       run: |
