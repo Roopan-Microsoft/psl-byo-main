@@ -3,7 +3,7 @@ name: Pylint
 on:
   push:
     branches:
-      - PSL-8594
+      - PSL-8549
 
 jobs:
   build:
