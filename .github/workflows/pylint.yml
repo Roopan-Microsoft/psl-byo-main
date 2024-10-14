@@ -1,6 +1,11 @@
 name: Pylint
 
-on: [push]
+#
+
+on:
+  push:
+    branches:
+      - PSL-BUG-8988
 
 jobs:
   build:
