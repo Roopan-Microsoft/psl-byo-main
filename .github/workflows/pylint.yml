@@ -30,6 +30,13 @@ jobs:
         deactivate
         echo ${{ github.workspace }}
       working-directory: ${{ github.workspace }}
+    
+    - name: Analyze code with Pylint
+      run: |
+        source venv/bin/activate
+        pylint $(git ls-files '*.py')
+        deactivate
+      working-directory: ${{ github.workspace }}
       
     # - name: Install dependencies
     #   run: |
