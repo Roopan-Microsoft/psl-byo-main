@@ -15,15 +15,11 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 
 def load_env_into_module(module_name, prefix=""):
-    """
-    function to enable loading of the .env file
-    into the global variables of the app.py module
-    """
     load_dotenv()
     module = __import__(module_name)
     for key, value in os.environ.items():
         if key.startswith(prefix):
-            setattr(module, key[len(prefix) :], value)  # noqa: E203
+            setattr(module, key[len(prefix) :], value)
 
 
 load_env_into_module("app")
@@ -48,10 +44,12 @@ with open(generated_data_path, "r") as file:
     data = json.load(file)
 
 
+"""
+Process a list of q(and a) pairs outputting to a file as we go.
+"""
+
+
 async def process(data: list, file):
-    """
-    Process a list of q(and a) pairs outputting to a file as we go.
-    """
     for qa_pairs_obj in data:
         qa_pairs = qa_pairs_obj["qa_pairs"]
         for qa_pair in qa_pairs:

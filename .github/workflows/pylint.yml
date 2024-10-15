@@ -1,9 +1,6 @@
 name: Pylint
 
-on:
-  push:
-    branches:
-      - PSL-8549
+on: [push]
 
 jobs:
   build:
@@ -23,7 +20,3 @@ jobs:
         pip install -r ClientAdvisor/App/requirements.txt
     - name: Run flake8
       run: flake8 --config=ClientAdvisor/App/.flake8 ClientAdvisor/App
-
-
-    
-    

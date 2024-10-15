@@ -888,6 +888,10 @@ async def complete_chat_request(request_body):
             history_metadata,
             PROMPTFLOW_RESPONSE_FIELD_NAME,
             PROMPTFLOW_CITATIONS_FIELD_NAME,
+            response,
+            history_metadata,
+            PROMPTFLOW_RESPONSE_FIELD_NAME,
+            PROMPTFLOW_CITATIONS_FIELD_NAME,
         )
     elif USE_AZUREFUNCTION:
         request_body = await request.get_json()
@@ -895,18 +899,37 @@ async def complete_chat_request(request_body):
 
         if client_id is None:
             return jsonify({"error": "No client ID provided"}), 400
+        # client_id = '10005'
+        print("Client ID in complete_chat_request: ", client_id)
+        # answer = "Sample response from Azure Function"
+        # Construct the URL of your Azure Function endpoint
+        # function_url = STREAMING_AZUREFUNCTION_ENDPOINT
+
+        # request_headers = {
+        #     "Content-Type": "application/json",
+        #     # 'Authorization': 'Bearer YOUR_TOKEN_HERE'  # if applicable
+        # }
+        # print(request_body.get("messages")[-1].get("content"))
+        # print(request_body)
 
         query = request_body.get("messages")[-1].get("content")
 
-        # Construct the URL of your Azure Function endpoint
+        print("Selected ClientId:", client_id)
+        # print("Selected ClientName:", selected_client_name)
+
+        # endpoint = STREAMING_AZUREFUNCTION_ENDPOINT + '?query=' + query + ' - for Client ' + selected_client_name + ':::' + selected_client_id
         endpoint = (
             STREAMING_AZUREFUNCTION_ENDPOINT + "?query=" + query + ":::" + client_id
         )
+
+        print("Endpoint: ", endpoint)
         query_response = ""
         try:
             with requests.get(endpoint, stream=True) as r:
                 for line in r.iter_lines(chunk_size=10):
+                    # query_response += line.decode('utf-8')
                     query_response = query_response + "\n" + line.decode("utf-8")
+                    # print(line.decode('utf-8'))
         except Exception as e:
             logging.debug(f"Setting timeout to {format_as_ndjson({'error' + str(e)})}")
 
@@ -939,11 +962,16 @@ async def stream_chat_request(request_body, request_headers):
         apim_request_id = ""
 
         client_id = request_body.get("client_id")
+        apim_request_id = ""
+
+        client_id = request_body.get("client_id")
         if client_id is None:
             return jsonify({"error": "No client ID provided"}), 400
         query = request_body.get("messages")[-1].get("content")
 
         async def generate():
+            deltaText = ""
+            # async for completionChunk in response:
             deltaText = ""
             # async for completionChunk in response:
             timeout = httpx.Timeout(10.0, read=None)
@@ -1259,6 +1287,7 @@ async def list_conversations():
         return jsonify({"error": f"No conversations for {user_id} were found"}), 404
 
     # return the conversation ids
+
     return jsonify(conversations), 200
 
 
@@ -1563,7 +1592,7 @@ def get_users():
         cursor.execute(sql_stmt)
         rows = cursor.fetchall()
 
-        if len(rows) == 0:
+        if len(rows) <= 6:
             # update ClientMeetings,Assets,Retirement tables sample data to current date
             cursor = conn.cursor()
             cursor.execute(
@@ -1608,7 +1637,6 @@ def get_users():
                 "ClientSummary": row["ClientSummary"],
             }
             users.append(user)
-
         return jsonify(users)
 
     except Exception as e:
