@@ -4,10 +4,12 @@ echo "Started the script"
 # Update package list and install required packages
 echo "Updating package list and installing Python and required packages..."
 sudo apt-get update -y
-sudo apt-get install -y python3 python3-dev g++ build-essential unixodbc-dev libpq-dev
+sudo apt-get install -y build-essential python3-dev unixodbc-dev libpq-dev
+
+# Upgrade pip, setuptools, and wheel
+pip3 install --upgrade pip setuptools wheel
 
 # Install pyodbc using pip
-pip3 install --upgrade pip setuptools wheel
 pip3 install pyodbc
 
 echo "Installation complete."
