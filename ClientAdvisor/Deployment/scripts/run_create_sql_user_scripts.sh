@@ -75,6 +75,6 @@ pip install -r "$requirementFile"
 
 echo "Executing Python script..."
 # Execute the Python script
-python3 create_sql_user.py
+#python3 create_sql_user.py
 
 echo "Script completed successfully."
