@@ -24,8 +24,8 @@ sed -i "s/kv_to-be-replaced/${safeKeyvaultName}/g" "create_sql_user.py"
 sed -i "s/miClientId_to-be-replaced/${safeMiClientId}/g" "create_sql_user.py"
 sed -i "s/user_to-be-replaced/${safeUserName}/g" "create_sql_user.py"
 
-RUN apt-get update
-RUN apt-get install python3 python3-dev g++ unixodbc-dev unixodbc libpq-dev
+apt-get update
+apt-get install python3 python3-dev g++ unixodbc-dev unixodbc libpq-dev
 apk add python3 python3-dev g++ unixodbc-dev unixodbc libpq-dev
  
 # RUN apt-get install python3 python3-dev g++ unixodbc-dev unixodbc libpq-dev
