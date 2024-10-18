@@ -9,7 +9,14 @@ sudo apt-get install -y build-essential python3-dev unixodbc-dev libpq-dev
 # Upgrade pip, setuptools, and wheel
 pip3 install --upgrade pip setuptools wheel
 
+# Create a virtual environment
+pip3 install virtualenv
+virtualenv venv
+
+# Activate the virtual environment
+source venv/bin/activate
+
 # Install pyodbc using pip
-pip3 install pyodbc
+pip install pyodbc
 
 echo "Installation complete."
