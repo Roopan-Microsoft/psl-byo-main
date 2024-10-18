@@ -24,8 +24,7 @@ curl --output "$requirementFile" "$requirementFileUrl"
 
 echo "Download completed"
 
-# Replace placeholders in the Python script
-echo "Replacing placeholders in create_sql_user.py..."
+# Replace key vault name and other placeholders
 sed -i "s/kv_to-be-replaced/${keyvaultName}/g" "create_sql_user.py"
 sed -i "s/miClientId_to-be-replaced/${miClientId}/g" "create_sql_user.py"
 sed -i "s/user_to-be-replaced/${userName}/g" "create_sql_user.py"
