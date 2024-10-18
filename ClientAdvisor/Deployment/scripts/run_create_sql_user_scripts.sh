@@ -1,5 +1,6 @@
 #!/bin/bash
-echo "started the script"
+set -e  # Exit on any error
+echo "Started the script"
 
 # Variables
 baseUrl="$1"
@@ -7,32 +8,41 @@ keyvaultName="$2"
 miClientId="$3"
 userName="$4"
 requirementFile="requirements.txt"
-requirementFileUrl=${baseUrl}"Deployment/scripts/index_scripts/requirements.txt"
+requirementFileUrl="${baseUrl}Deployment/scripts/index_scripts/requirements.txt"
 
-echo "Script Started"
+echo "Downloading necessary scripts..."
 
-# Download the create_index and create table python files
-curl --output "create_sql_user.py" ${baseUrl}"Deployment/scripts/index_scripts/create_sql_user.py"
+# Download the create_sql_user Python file
+curl --output "create_sql_user.py" "${baseUrl}Deployment/scripts/index_scripts/create_sql_user.py"
 
 # Download the requirement file
 curl --output "$requirementFile" "$requirementFileUrl"
 
 echo "Download completed"
 
-# Replace key vault name and other placeholders
-sed -i "s/kv_to-be-replaced/${safeKeyvaultName}/g" "create_sql_user.py"
-sed -i "s/miClientId_to-be-replaced/${safeMiClientId}/g" "create_sql_user.py"
-sed -i "s/user_to-be-replaced/${safeUserName}/g" "create_sql_user.py"
+# Replace placeholders in the Python script with actual values
+sed -i "s/kv_to-be-replaced/${keyvaultName}/g" "create_sql_user.py"
+sed -i "s/miClientId_to-be-replaced/${miClientId}/g" "create_sql_user.py"
+sed -i "s/user_to-be-replaced/${userName}/g" "create_sql_user.py"
 
-# apt-get update
-# apt-get install python3 python3-dev g++ unixodbc-dev unixodbc libpq-dev
-# apk add python3 python3-dev g++ unixodbc-dev unixodbc libpq-dev
- 
-# # RUN apt-get install python3 python3-dev g++ unixodbc-dev unixodbc libpq-dev
-# pip install pyodbc
+echo "Installing necessary dependencies..."
 
-# Install dependencies
-pip install -r requirements.txt
+# Install necessary packages for pyodbc and other dependencies (use either apt-get or apk depending on the environment)
+if command -v apt-get &> /dev/null; then
+    sudo apt-get update
+    sudo apt-get install -y python3 python3-dev g++ unixodbc-dev unixodbc libpq-dev curl
+elif command -v apk &> /dev/null; then
+    apk add --no-cache python3 python3-dev g++ unixodbc-dev unixodbc libpq-dev curl
+else
+    echo "Unsupported package manager. Please install dependencies manually."
+    exit 1
+fi
 
-# Execute Python script
-python create_sql_user.py
+# Install Python dependencies
+pip install -r "$requirementFile"
+
+echo "Executing Python script..."
+# Execute the Python script
+python3 create_sql_user.py
+
+echo "Script completed successfully."
