@@ -45,18 +45,32 @@ fi
 
 echo "Installing necessary dependencies..."
 
-# Install dependencies (apt-get or apk)
+# Install ODBC Driver for SQL Server
 if command -v apt-get &> /dev/null; then
-    sudo apt-get update
-    sudo apt-get install -y python3 python3-dev g++ unixodbc-dev unixodbc libpq-dev curl
-elif command -v apk &> /dev/null; then
-    apk add --no-cache python3 python3-dev g++ unixodbc-dev unixodbc libpq-dev curl
+    echo "Installing ODBC Driver 18 for SQL Server..."
+    sudo su -c "apt-get update && \
+                 apt-get install -y curl && \
+                 curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - && \
+                 curl https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/prod.list > /etc/apt/sources.list.d/mssql-release.list && \
+                 apt-get update && \
+                 ACCEPT_EULA=Y apt-get install -y msodbcsql18"
+elif command -v yum &> /dev/null; then
+    echo "Installing ODBC Driver 18 for SQL Server..."
+    sudo su -c "yum update -y && \
+                 curl https://packages.microsoft.com/keys/microsoft.asc | rpm --import - && \
+                 curl https://packages.microsoft.com/config/rhel/$(cat /etc/os-release | grep VERSION_ID | cut -d '=' -f 2)/prod.repo > /etc/yum.repos.d/mssql-release.repo && \
+                 ACCEPT_EULA=Y yum install -y msodbcsql18"
 else
-    echo "Unsupported package manager. Please install dependencies manually."
+    echo "Unsupported package manager. Please install ODBC Driver manually."
     exit 1
 fi
 
+# Set up a Python virtual environment
+python3 -m venv myenv
+source myenv/bin/activate
+
 # Install Python dependencies
+pip install --upgrade pip  # Upgrade pip to the latest version
 pip install -r "$requirementFile"
 
 echo "Executing Python script..."
