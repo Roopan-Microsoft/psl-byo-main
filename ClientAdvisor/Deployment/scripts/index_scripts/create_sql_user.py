@@ -13,25 +13,31 @@ def get_secrets_from_kv(kv_name, secret_name):
     secret_client = SecretClient(vault_url=f"https://{kv_name}.vault.azure.net/", credential=credential)
     return secret_client.get_secret(secret_name).value
 
-# Retrieve server and database secrets from Key Vault
-server = get_secrets_from_kv(key_vault_name, "SQLDB-SERVER")
-database = get_secrets_from_kv(key_vault_name, "SQLDB-DATABASE")
+try:
+    # Retrieve server and database secrets from Key Vault
+    server = get_secrets_from_kv(key_vault_name, "SQLDB-SERVER")
+    database = get_secrets_from_kv(key_vault_name, "SQLDB-DATABASE")
+    print(f"Server: {server}, Database: {database}")  # Debug info
 
-# Managed Identity-based authentication
-authentication = 'ActiveDirectoryMsi'
+    # Managed Identity-based authentication
+    authentication = 'ActiveDirectoryMsi'
+    
+    # Connection string for SQL Server using Managed Identity
+    conn_string = (
+        f'Driver={{ODBC Driver 18 for SQL Server}};'
+        f'Server={server},1433;'
+        f'Database={database};'
+        f'UID={managed_identity_client_id};'
+        f'Authentication={authentication};'
+        f'Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;'
+    )
 
-# Connection string for SQL Server using Managed Identity
-conn_string = (
-    f'Driver={{ODBC Driver 18 for SQL Server}};'
-    f'Server={server},1433;'
-    f'Database={database};'
-    f'UID={managed_identity_client_id};'  # Use managed identity client ID for user
-    f'Authentication={authentication};'
-    f'Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;'
-)
+    # Establish the connection
+    conn = pyodbc.connect(conn_string)
+    print("Connection established successfully")  # Debug info
+except Exception as e:
+    print(f"An error occurred: {str(e)}")
 
-# Establish the connection
-conn = pyodbc.connect(conn_string)
 cursor = conn.cursor()
 
 # SQL commands to create user and assign roles
