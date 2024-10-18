@@ -24,10 +24,6 @@ sed -i "s/kv_to-be-replaced/${keyvaultName}/g" "create_sql_user.py"
 sed -i "s/miClientId_to-be-replaced/${miClientId}/g" "create_sql_user.py"
 sed -i "s/user_to-be-replaced/${userName}/g" "create_sql_user.py"
 
-RUN apt-get update 
-RUN apt-get install -y build-essential unixodbc-dev g++
-pip install pyodbc
-
 pip install -r requirements.txt
 
 python create_sql_user.py
