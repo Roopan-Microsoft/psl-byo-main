@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e  # Exit on any error
+set -e  # Exit on error
 echo "Started the script"
 
 # Variables
@@ -14,20 +14,38 @@ echo "Downloading necessary scripts..."
 
 # Download the create_sql_user Python file
 curl --output "create_sql_user.py" "${baseUrl}Deployment/scripts/index_scripts/create_sql_user.py"
+if [ $? -ne 0 ]; then
+    echo "Error downloading create_sql_user.py from ${baseUrl}."
+    exit 1
+fi
 
 # Download the requirement file
 curl --output "$requirementFile" "$requirementFileUrl"
+if [ $? -ne 0 ]; then
+    echo "Error downloading requirements.txt from ${baseUrl}."
+    exit 1
+fi
 
 echo "Download completed"
+
+# Escape special characters in variables for sed
+keyvaultName=$(printf '%s\n' "$keyvaultName" | sed 's/[&/\]/\\&/g')
+miClientId=$(printf '%s\n' "$miClientId" | sed 's/[&/\]/\\&/g')
+userName=$(printf '%s\n' "$userName" | sed 's/[&/\]/\\&/g')
 
 # Replace placeholders in the Python script with actual values
 sed -i "s/kv_to-be-replaced/${keyvaultName}/g" "create_sql_user.py"
 sed -i "s/miClientId_to-be-replaced/${miClientId}/g" "create_sql_user.py"
 sed -i "s/user_to-be-replaced/${userName}/g" "create_sql_user.py"
 
+if [ $? -ne 0 ]; then
+    echo "Error replacing placeholders in create_sql_user.py."
+    exit 1
+fi
+
 echo "Installing necessary dependencies..."
 
-# Install necessary packages for pyodbc and other dependencies (use either apt-get or apk depending on the environment)
+# Install dependencies (apt-get or apk)
 if command -v apt-get &> /dev/null; then
     sudo apt-get update
     sudo apt-get install -y python3 python3-dev g++ unixodbc-dev unixodbc libpq-dev curl
