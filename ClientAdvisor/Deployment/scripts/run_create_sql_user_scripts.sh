@@ -28,7 +28,7 @@ echo "Download completed"
 sed -i "s/kv_to-be-replaced/${keyvaultName}/g" "create_sql_user.py"
 sed -i "s/miClientId_to-be-replaced/${miClientId}/g" "create_sql_user.py"
 sed -i "s/user_to-be-replaced/${userName}/g" "create_sql_user.py"
-echo create_sql_user.py
+cat create_sql_user.py
 # # Create a Python virtual environment in /tmp
 # python3 -m venv /tmp/myenv
 # source /tmp/myenv/bin/activate
