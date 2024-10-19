@@ -42,13 +42,13 @@ sudo apt-get install -y python3-pyodbc
 
 echo "Installation complete."
 
-# # Install Python dependencies
-# echo "Installing Python dependencies from requirements.txt..."
-# pip install -r requirements.txt
+# Install Python dependencies
+echo "Installing Python dependencies from requirements.txt..."
+pip install -r requirements.txt
 
-# # Execute the Python script to create the SQL user
-# echo "Executing create_sql_user.py..."
-# python3 create_sql_user.py
+# Execute the Python script to create the SQL user
+echo "Executing create_sql_user.py..."
+python3 create_sql_user.py
 
 # # Check for errors during Python script execution
 # if [ $? -eq 0 ]; then
