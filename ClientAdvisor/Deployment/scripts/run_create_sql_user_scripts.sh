@@ -9,10 +9,7 @@ source /tmp/myenv/bin/activate
 sudo apt-get update -y
 sudo apt-get install -y build-essential python3-dev unixodbc unixodbc-dev
 
-# Upgrade pip, setuptools, and wheel
-pip install --upgrade pip setuptools wheel
-
-# Install pyodbc and prefer binary wheels
-pip install pyodbc --prefer-binary
+# Install pyodbc using apt
+sudo apt-get install -y python3-pyodbc
 
 echo "Installation complete."
