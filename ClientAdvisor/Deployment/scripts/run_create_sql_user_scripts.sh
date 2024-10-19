@@ -43,9 +43,9 @@ apt-get install -y python3-pyodbc
 
 echo "System dependencies installation complete."
 
-# Install Python dependencies
-echo "Installing Python dependencies from requirements.txt..."
-pip install -r requirements.txt
+# # Install Python dependencies
+# echo "Installing Python dependencies from requirements.txt..."
+# pip install -r requirements.txt
 
 # Execute the Python script to create the SQL user
 echo "Executing create_sql_user.py..."
