@@ -47,8 +47,8 @@ echo "Installation complete."
 # pip install -r requirements.txt
 
 # # Execute the Python script to create the SQL user
-# echo "Executing create_sql_user.py..."
-# python3 create_sql_user.py
+echo "Executing create_sql_user.py..."
+python3 create_sql_user.py
 
 # # Check for errors during Python script execution
 # if [ $? -eq 0 ]; then
