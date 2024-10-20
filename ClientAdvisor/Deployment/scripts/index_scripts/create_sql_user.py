@@ -51,6 +51,21 @@ ALTER ROLE db_ddladmin ADD MEMBER [{user_name}];
 cursor.execute(create_user_sql)
 conn.commit()
 
+create_table_sql = f"""
+CREATE TABLE Employees (
+    EmployeeID INT PRIMARY KEY,
+    FirstName VARCHAR(50),
+    LastName VARCHAR(50),
+    BirthDate DATE,
+    HireDate DATE,
+    JobTitle VARCHAR(50)
+);
+"""
+
+# Execute SQL commands
+cursor.execute(create_table_sql)
+conn.commit()
+
 # Close the connection
 cursor.close()
 conn.close()
