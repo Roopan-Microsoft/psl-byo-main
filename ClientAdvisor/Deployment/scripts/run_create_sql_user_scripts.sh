@@ -52,10 +52,10 @@ echo "Executing create_sql_user.py..."
 python3 create_sql_user.py
 echo "Executing create_sql_user.py completed"
 
-# # Check for errors during Python script execution
-# if [ $? -eq 0 ]; then
-#     echo "SQL user creation script executed successfully!"
-# else
-#     echo "Error executing SQL user creation script." >&2
-#     exit 1
-# fi
+# Check for errors during Python script execution
+if [ $? -eq 0 ]; then
+    echo "SQL user creation script executed successfully!"
+else
+    echo "Error executing SQL user creation script." >&2
+    exit 1
+fi
