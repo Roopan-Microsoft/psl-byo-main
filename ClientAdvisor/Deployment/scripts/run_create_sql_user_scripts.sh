@@ -33,22 +33,24 @@ cat create_sql_user.py
 python3 -m venv /tmp/myenv
 source /tmp/myenv/bin/activate
 
-# Install necessary system packages
-sudo apt-get update -y
-sudo apt-get install -y build-essential python3-dev unixodbc unixodbc-dev
+# Install Python dependencies
+echo "Installing Python dependencies from requirements.txt..."
+pip install -r requirements.txt
+echo "Installing Python dependencies from requirements.txt completed"
 
-# Install pyodbc using apt
-sudo apt-get install -y python3-pyodbc
+# # Install necessary system packages
+# sudo apt-get update -y
+# sudo apt-get install -y build-essential python3-dev unixodbc unixodbc-dev
 
-echo "Installation complete."
+# # Install pyodbc using apt
+# sudo apt-get install -y python3-pyodbc
 
-# # Install Python dependencies
-# echo "Installing Python dependencies from requirements.txt..."
-# pip install -r requirements.txt
+# echo "Installation complete."
 
 # # Execute the Python script to create the SQL user
 echo "Executing create_sql_user.py..."
 python3 create_sql_user.py
+echo "Executing create_sql_user.py completed"
 
 # # Check for errors during Python script execution
 # if [ $? -eq 0 ]; then
