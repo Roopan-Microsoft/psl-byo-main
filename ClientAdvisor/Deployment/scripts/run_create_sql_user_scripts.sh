@@ -49,7 +49,7 @@ echo "Installation complete."
 
 # # Execute the Python script to create the SQL user
 echo "Executing create_sql_user.py..."
-python3 create_sql_user.py
+python3 -u create_sql_user.py
 echo "Executing create_sql_user.py completed"
 
 # Check for errors during Python script execution

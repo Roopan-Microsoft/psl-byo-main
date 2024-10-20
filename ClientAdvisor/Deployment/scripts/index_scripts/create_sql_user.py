@@ -1,7 +1,7 @@
 import pyodbc
 from azure.keyvault.secrets import SecretClient  
 from azure.identity import DefaultAzureCredential
-
+print(f"inside Create SQL User")
 # Replace with your Key Vault name and Managed Identity client ID
 key_vault_name = 'kv_to-be-replaced'
 managed_identity_client_id = 'miClientId_to-be-replaced'
