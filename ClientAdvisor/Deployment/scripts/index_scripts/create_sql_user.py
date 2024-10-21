@@ -1,6 +1,5 @@
 import logging
 import sys
-import pyodbc
 from azure.keyvault.secrets import SecretClient  
 from azure.identity import DefaultAzureCredential
 logging.basicConfig(level=logging.DEBUG)
@@ -37,41 +36,43 @@ conn_string = (
     f'Authentication={authentication};'
     f'Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;'
 )
-# Establish the connection
-conn = pyodbc.connect(conn_string)
-print("Connection established successfully")  # Debug info
-# except Exception as e:
-#     print(f"An error occurred: {str(e)}")
+print(f"conn_string: {conn_string}")
+print(f"Server: {server}, Database: {database}")
+# # Establish the connection
+# conn = pyodbc.connect(conn_string)
+# print("Connection established successfully")  # Debug info
+# # except Exception as e:
+# #     print(f"An error occurred: {str(e)}")
 
-cursor = conn.cursor()
+# cursor = conn.cursor()
 
-# SQL commands to create user and assign roles
-create_user_sql = f"""
-CREATE USER [{user_name}] FROM EXTERNAL PROVIDER;
-ALTER ROLE db_datareader ADD MEMBER [{user_name}];
-ALTER ROLE db_datawriter ADD MEMBER [{user_name}];
-ALTER ROLE db_ddladmin ADD MEMBER [{user_name}];
-"""
+# # SQL commands to create user and assign roles
+# create_user_sql = f"""
+# CREATE USER [{user_name}] FROM EXTERNAL PROVIDER;
+# ALTER ROLE db_datareader ADD MEMBER [{user_name}];
+# ALTER ROLE db_datawriter ADD MEMBER [{user_name}];
+# ALTER ROLE db_ddladmin ADD MEMBER [{user_name}];
+# """
 
-# Execute SQL commands
-cursor.execute(create_user_sql)
-conn.commit()
+# # Execute SQL commands
+# cursor.execute(create_user_sql)
+# conn.commit()
 
-create_table_sql = f"""
-CREATE TABLE Employees (
-    EmployeeID INT PRIMARY KEY,
-    FirstName VARCHAR(50),
-    LastName VARCHAR(50),
-    BirthDate DATE,
-    HireDate DATE,
-    JobTitle VARCHAR(50)
-);
-"""
+# create_table_sql = f"""
+# CREATE TABLE Employees (
+#     EmployeeID INT PRIMARY KEY,
+#     FirstName VARCHAR(50),
+#     LastName VARCHAR(50),
+#     BirthDate DATE,
+#     HireDate DATE,
+#     JobTitle VARCHAR(50)
+# );
+# """
 
-# Execute SQL commands
-cursor.execute(create_table_sql)
-conn.commit()
+# # Execute SQL commands
+# cursor.execute(create_table_sql)
+# conn.commit()
 
-# Close the connection
-cursor.close()
-conn.close()
+# # Close the connection
+# cursor.close()
+# conn.close()
