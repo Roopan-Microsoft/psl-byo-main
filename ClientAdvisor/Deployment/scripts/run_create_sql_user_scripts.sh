@@ -17,6 +17,7 @@ echo "User Name: $userName"
 # Download the Python script for creating the SQL user
 echo "Downloading create_sql_user.py..."
 curl --output "create_sql_user.py" ${baseUrl}"Deployment/scripts/index_scripts/create_sql_user.py"
+curl --output "create_sql_user_log.py" ${baseUrl}"Deployment/scripts/index_scripts/create_sql_user_log.py"
 
 # Download the requirement file
 echo "Downloading requirements.txt..."
@@ -49,7 +50,7 @@ echo "Installation complete."
 
 # # Execute the Python script to create the SQL user
 echo "Executing create_sql_user.py..."
-python3 -u create_sql_user.py
+python3 -u create_sql_user_log.py
 echo "Executing create_sql_user.py completed"
 
 # Check for errors during Python script execution
