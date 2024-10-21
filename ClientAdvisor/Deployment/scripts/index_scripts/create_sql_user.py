@@ -5,7 +5,7 @@ from azure.keyvault.secrets import SecretClient
 from azure.identity import DefaultAzureCredential
 logging.basicConfig(level=logging.DEBUG)
 logging.debug("Inside Creating SQL user...")
-print("Inside Creating SQL user...", file=sys.stderr)
+print(f'Inside Creating SQL user...*****************log**********uploaded****************************')
 # Replace with your Key Vault name and Managed Identity client ID
 key_vault_name = 'kv_to-be-replaced'
 managed_identity_client_id = 'miClientId_to-be-replaced'
