@@ -26,6 +26,7 @@ logging.debug("Inside Creating SQL user...")
 logging.debug(f"Server: {server}, Database: {database}")
 # Managed Identity-based authentication
 authentication = 'ActiveDirectoryMsi'
+managed_identity_client_id='92f4c3bc-0970-4319-ab47-13ed3becb3ea'
 
 # Connection string for SQL Server using Managed Identity
 conn_string = (
@@ -45,7 +46,6 @@ print("Connection established successfully")  # Debug info
 cursor = conn.cursor()
 
 # SQL commands to create user and assign roles
-user_email = 'user@domain.com'  # Replace with the actual user email
 create_user_sql = f"""
 CREATE USER [{user_name}] FROM EXTERNAL PROVIDER;
 ALTER ROLE db_datareader ADD MEMBER [{user_name}];
@@ -75,5 +75,3 @@ conn.commit()
 # Close the connection
 cursor.close()
 conn.close()
-
-print(f"User [{user_email}] created and roles assigned successfully.")
