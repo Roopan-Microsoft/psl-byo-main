@@ -40,8 +40,8 @@ echo "Installing Python dependencies from requirements.txt..."
 pip install -r requirements.txt
 echo "Installing Python dependencies from requirements.txt completed"
 
-# Install pyodbc (you may need to adjust this part for Windows)
-pip install pyodbc
+# Install pyodbc if necessary (for Windows)
+# pip install pyodbc
 
 echo "Installation complete."
 
