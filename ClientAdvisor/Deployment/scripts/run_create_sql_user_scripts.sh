@@ -30,7 +30,8 @@ sed -i "s/kv_to-be-replaced/${keyvaultName}/g" "create_sql_user.py"
 sed -i "s/miClientId_to-be-replaced/${miClientId}/g" "create_sql_user.py"
 sed -i "s/user_to-be-replaced/${userName}/g" "create_sql_user.py"
 cat create_sql_user.py
-# Create a Python virtual environment in /tmp
+
+# Create a Python virtual environment
 python3 -m venv /tmp/myenv
 source /tmp/myenv/bin/activate
 
@@ -39,12 +40,8 @@ echo "Installing Python dependencies from requirements.txt..."
 pip install -r requirements.txt
 echo "Installing Python dependencies from requirements.txt completed"
 
-# Install necessary system packages
-sudo apt-get update -y
-sudo apt-get install -y build-essential python3-dev unixodbc unixodbc-dev
-
-# Install pyodbc using apt
-sudo apt-get install -y python3-pyodbc
+# Install pyodbc (you may need to adjust this part for Windows)
+pip install pyodbc
 
 echo "Installation complete."
 
