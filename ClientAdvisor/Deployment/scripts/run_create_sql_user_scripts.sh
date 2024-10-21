@@ -31,9 +31,9 @@ sed -i "s/miClientId_to-be-replaced/${miClientId}/g" "create_sql_user.py"
 sed -i "s/user_to-be-replaced/${userName}/g" "create_sql_user.py"
 cat create_sql_user.py
 
-# Create a Python virtual environment
-python3 -m venv /tmp/myenv
-source /tmp/myenv/bin/activate
+# # Create a Python virtual environment
+# python3 -m venv /tmp/myenv
+# source /tmp/myenv/bin/activate
 
 # Install Python dependencies
 echo "Installing Python dependencies from requirements.txt..."
@@ -47,13 +47,6 @@ echo "Installation complete."
 
 # # Execute the Python script to create the SQL user
 echo "Executing create_sql_user.py..."
-python3 -u create_sql_user_log.py
+python create_sql_user_log.py
 echo "Executing create_sql_user.py completed"
 
-# Check for errors during Python script execution
-if [ $? -eq 0 ]; then
-    echo "SQL user creation script executed successfully!"
-else
-    echo "Error executing SQL user creation script." >&2
-    exit 1
-fi
