@@ -10,5 +10,5 @@ azure-ai-textanalytics
 azure-search-documents==11.6.0b3
 azure-keyvault-secrets
 pandas
-#pymssql
+pymssql
 datetime
