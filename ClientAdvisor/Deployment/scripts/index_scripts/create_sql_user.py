@@ -1,9 +1,6 @@
-import logging
 import sys
 from azure.keyvault.secrets import SecretClient  
 from azure.identity import DefaultAzureCredential
-logging.basicConfig(level=logging.DEBUG)
-logging.debug("Inside Creating SQL user...")
 print(f'Inside Creating SQL user...*****************log**********uploaded****************************')
 # Replace with your Key Vault name and Managed Identity client ID
 key_vault_name = 'kv_to-be-replaced'
@@ -15,14 +12,12 @@ def get_secrets_from_kv(kv_name, secret_name):
     credential = DefaultAzureCredential()
     secret_client = SecretClient(vault_url=f"https://{kv_name}.vault.azure.net/", credential=credential)
     return secret_client.get_secret(secret_name).value
-logging.debug("Inside Creating SQL user...1")
+
 # try:
 # Retrieve server and database secrets from Key Vault
 server = get_secrets_from_kv(key_vault_name, "SQLDB-SERVER")
 database = get_secrets_from_kv(key_vault_name, "SQLDB-DATABASE")
 print(f"Server: {server}, Database: {database}")  # Debug info
-logging.debug("Inside Creating SQL user...")
-logging.debug(f"Server: {server}, Database: {database}")
 # Managed Identity-based authentication
 authentication = 'ActiveDirectoryMsi'
 managed_identity_client_id='92f4c3bc-0970-4319-ab47-13ed3becb3ea'
