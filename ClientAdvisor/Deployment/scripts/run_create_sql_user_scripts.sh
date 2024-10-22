@@ -40,12 +40,12 @@ echo "Installing Python dependencies from requirements.txt..."
 pip install -r requirements.txt
 echo "Installing Python dependencies from requirements.txt completed"
 
-# Install necessary system packages
-sudo apt-get update -y
-sudo apt-get install -y build-essential python3-dev unixodbc unixodbc-dev
-# Install pyodbc using apt
-sudo apt-get install -y python3-pyodbc
-echo "Installation complete."
+# # Install necessary system packages
+# sudo apt-get update -y
+# sudo apt-get install -y build-essential python3-dev unixodbc unixodbc-dev
+# # Install pyodbc using apt
+# sudo apt-get install -y python3-pyodbc
+# echo "Installation complete."
 
 # # Execute the Python script to create the SQL user
 echo "Executing create_sql_user.py..."
