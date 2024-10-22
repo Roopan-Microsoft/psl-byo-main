@@ -1,3 +1,5 @@
+print(f"+++++++++Logs++++++++++")
+
 try:
     import sys
     from azure.keyvault.secrets import SecretClient  

@@ -34,6 +34,10 @@ cat create_sql_user.py
 # # Create a Python virtual environment
 # python3 -m venv /tmp/myenv
 # source /tmp/myenv/bin/activate
+python -m venv env && source ./env/bin/activate
+python -m pip install -U pip wheel setuptools
+pip install pyodbc
+Successfully installed pip 20.1 setuptools-46.1.3 wheel-0.34.2
 
 # Install Python dependencies
 echo "Installing Python dependencies from requirements.txt..."
