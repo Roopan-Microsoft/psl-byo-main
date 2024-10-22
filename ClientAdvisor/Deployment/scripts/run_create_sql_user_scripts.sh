@@ -36,7 +36,8 @@ cat create_sql_user.py
 # source /tmp/myenv/bin/activate
 python -m venv env && source ./env/bin/activate
 python -m pip install -U pip wheel setuptools
-pip install pyodbc
+!apt install unixodbc-dev
+!pip install pyodbc
 Successfully installed pip 20.1 setuptools-46.1.3 wheel-0.34.2
 
 # Install Python dependencies
