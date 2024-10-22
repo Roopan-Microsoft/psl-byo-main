@@ -31,29 +31,29 @@ sed -i "s/miClientId_to-be-replaced/${miClientId}/g" "create_sql_user.py"
 sed -i "s/user_to-be-replaced/${userName}/g" "create_sql_user.py"
 cat create_sql_user.py
 
-# # Create a Python virtual environment
-# python3 -m venv /tmp/myenv
-# source /tmp/myenv/bin/activate
-python -m venv env && source ./env/bin/activate
-python -m pip install -U pip wheel setuptools
-!apt install unixodbc-dev
-!pip install pyodbc
-Successfully installed pip 20.1 setuptools-46.1.3 wheel-0.34.2
+# Install system dependencies for pyodbc
+echo "Installing system packages..."
+sudo apt-get update -y
+sudo apt-get install -y build-essential python3-dev unixodbc unixodbc-dev python3-pip python3-venv
 
-# Install Python dependencies
+# Create a Python virtual environment
+echo "Creating Python virtual environment..."
+python3 -m venv env
+source ./env/bin/activate
+
+# Upgrade pip, setuptools, and wheel
+python -m pip install -U pip wheel setuptools
+
+# Install pyodbc and other dependencies
+echo "Installing pyodbc..."
+pip install pyodbc
+
+# Install Python dependencies from requirements.txt
 echo "Installing Python dependencies from requirements.txt..."
 pip install -r requirements.txt
 echo "Installing Python dependencies from requirements.txt completed"
 
-# # Install necessary system packages
-# sudo apt-get update -y
-# sudo apt-get install -y build-essential python3-dev unixodbc unixodbc-dev
-# # Install pyodbc using apt
-# sudo apt-get install -y python3-pyodbc
-# echo "Installation complete."
-
-# # Execute the Python script to create the SQL user
+# Execute the Python script to create the SQL user
 echo "Executing create_sql_user.py..."
 python3 create_sql_user.py
 echo "Executing create_sql_user.py completed"
-
