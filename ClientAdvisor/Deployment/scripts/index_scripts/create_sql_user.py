@@ -1,19 +1,19 @@
-import sys
-from azure.keyvault.secrets import SecretClient  
-from azure.identity import DefaultAzureCredential
-print(f'Inside Creating SQL user...*****************log**********uploaded****************************')
-# Replace with your Key Vault name and Managed Identity client ID
-key_vault_name = 'kv_to-be-replaced'
-managed_identity_client_id = 'miClientId_to-be-replaced'
-user_name = 'user_to-be-replaced'
-
-# Function to retrieve secrets from Azure Key Vault
-def get_secrets_from_kv(kv_name, secret_name):
-    credential = DefaultAzureCredential()
-    secret_client = SecretClient(vault_url=f"https://{kv_name}.vault.azure.net/", credential=credential)
-    return secret_client.get_secret(secret_name).value
-
 try:
+    import sys
+    from azure.keyvault.secrets import SecretClient  
+    from azure.identity import DefaultAzureCredential
+    print(f'Inside Creating SQL user...*****************log**********uploaded****************************')
+    # Replace with your Key Vault name and Managed Identity client ID
+    key_vault_name = 'kv_to-be-replaced'
+    managed_identity_client_id = 'miClientId_to-be-replaced'
+    user_name = 'user_to-be-replaced'
+
+    # Function to retrieve secrets from Azure Key Vault
+    def get_secrets_from_kv(kv_name, secret_name):
+        credential = DefaultAzureCredential()
+        secret_client = SecretClient(vault_url=f"https://{kv_name}.vault.azure.net/", credential=credential)
+        return secret_client.get_secret(secret_name).value
+
     import pyodbc
     # Retrieve server and database secrets from Key Vault
     server = get_secrets_from_kv(key_vault_name, "SQLDB-SERVER")
@@ -37,8 +37,6 @@ try:
     # Establish the connection
     conn = pyodbc.connect(conn_string)
     print("Connection established successfully")  # Debug info
-except Exception as e:
-    print(f"An error occurred: {str(e)}")
 
 # cursor = conn.cursor()
 
@@ -72,3 +70,6 @@ except Exception as e:
 # # Close the connection
 # cursor.close()
 # conn.close()
+
+except Exception as e:
+    print(f"An error occurred: {str(e)}")
