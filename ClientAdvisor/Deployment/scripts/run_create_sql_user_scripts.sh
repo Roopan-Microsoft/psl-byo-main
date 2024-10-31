@@ -33,6 +33,8 @@ cat create_sql_user.py
 
 # Install system dependencies for pyodbc
 echo "Installing system packages..."
+sudo apt-get update
+sudo apt-get install unixodbc-dev
 # sudo apt-get update -y
 # sudo apt-get install -y build-essential python3-dev unixodbc unixodbc-dev python3-pip python3-venv
 
@@ -47,13 +49,6 @@ echo "Installing system packages..."
 # # Install pyodbc and other dependencies
 # echo "Installing pyodbc..."
 # pip install pyodbc
-
-apk add --no-cache --virtual .build-deps \
-    build-base \
-    libffi-dev \
-    openssl-dev \
-    curl \
-    unixodbc-dev
 
 # Install Python dependencies from requirements.txt
 echo "Installing Python dependencies from requirements.txt..."
