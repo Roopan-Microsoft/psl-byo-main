@@ -1,3 +1,6 @@
+import struct
+
+
 print(f"+++++++++Logs++++++++++")
 
 try:
@@ -5,6 +8,15 @@ try:
     from azure.keyvault.secrets import SecretClient  
     from azure.identity import DefaultAzureCredential
     print(f'Inside Creating SQL user...*****************log**********uploaded****************************')
+    
+    def get_conn():
+        credential = DefaultAzureCredential(exclude_interactive_browser_credential=False)
+        token_bytes = credential.get_token("https://database.windows.net/.default").token.encode("UTF-16-LE")
+        token_struct = struct.pack(f'<I{len(token_bytes)}s', len(token_bytes), token_bytes)
+        SQL_COPT_SS_ACCESS_TOKEN = 1256  # This connection option is defined by microsoft in msodbcsql.h
+        conn = pyodbc.connect(connection_string, attrs_before={SQL_COPT_SS_ACCESS_TOKEN: token_struct})
+        return conn
+
     # Replace with your Key Vault name and Managed Identity client ID
     key_vault_name = 'kv_to-be-replaced'
     managed_identity_client_id = 'miClientId_to-be-replaced'
@@ -25,18 +37,18 @@ try:
     authentication = 'ActiveDirectoryManagedIdentity'
 
     # Connection string for SQL Server using Managed Identity
-    conn_string = (
+    connection_string = (
         f'Driver={{ODBC Driver 17 for SQL Server}};'
         f'Server=tcp:{server},1433;'
         f'Database={database};'
-        f'ClientId={managed_identity_client_id};'
-        f'Authentication={authentication};'
         f'Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;'
     )
-    print(f"conn_string: {conn_string}")
+    print(f"conn_string: {connection_string}")
     print(f"Server: {server}, Database: {database}")
     # Establish the connection
-    conn = pyodbc.connect(conn_string)
+    with get_conn() as conn:
+        cursor = conn.cursor()
+        # Do something with the data
     print("Connection established successfully")  # Debug info
 
 # cursor = conn.cursor()
