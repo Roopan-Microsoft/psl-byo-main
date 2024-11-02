@@ -33,19 +33,23 @@ cat create_sql_user.py
 
 # Install system dependencies for pyodbc
 echo "Installing system packages..."
-# Install system dependencies
-RUN apk update && \
-    apk add --no-cache --virtual .build-deps \
-    curl \
-    build-base && \
-    apk add --no-cache \
-    unixodbc-dev \
-    && \
-    curl -o /etc/apk/keys/microsoft.asc https://packages.microsoft.com/keys/microsoft.asc && \
-    curl -o /etc/apk/repositories https://packages.microsoft.com/config/$(. /etc/os-release && echo $ID$VERSION_ID)/prod.list && \
-    apk update && \
-    apk add msodbcsql17 && \
-    apk del .build-deps
+apk add --no-cache --virtual .build-deps \
+    build-base \
+    unixodbc-dev
+# sudo apt-get update -y
+# sudo apt-get install -y build-essential python3-dev unixodbc unixodbc-dev python3-pip python3-venv
+
+# # Create a Python virtual environment
+# echo "Creating Python virtual environment..."
+# python3 -m venv env
+# source ./env/bin/activate
+
+# # Upgrade pip, setuptools, and wheel
+# python -m pip install -U pip wheel setuptools
+
+# # Install pyodbc and other dependencies
+# echo "Installing pyodbc..."
+# pip install pyodbc
 
 # Install Python dependencies from requirements.txt
 echo "Installing Python dependencies from requirements.txt..."
