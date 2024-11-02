@@ -36,20 +36,22 @@ echo "Installing system packages..."
 apk add --no-cache --virtual .build-deps \
     build-base \
     unixodbc-dev
-# sudo apt-get update -y
-# sudo apt-get install -y build-essential python3-dev unixodbc unixodbc-dev python3-pip python3-venv
 
-# # Create a Python virtual environment
-# echo "Creating Python virtual environment..."
-# python3 -m venv env
-# source ./env/bin/activate
+#Download the desired package(s)
+curl -O https://download.microsoft.com/download/7/6/d/76de322a-d860-4894-9945-f0cc5d6a45f8/msodbcsql18_18.4.1.1-1_$architecture.apk
+curl -O https://download.microsoft.com/download/7/6/d/76de322a-d860-4894-9945-f0cc5d6a45f8/mssql-tools18_18.4.1.1-1_$architecture.apk
 
-# # Upgrade pip, setuptools, and wheel
-# python -m pip install -U pip wheel setuptools
+#(Optional) Verify signature, if 'gpg' is missing install it using 'apk add gnupg':
+curl -O https://download.microsoft.com/download/7/6/d/76de322a-d860-4894-9945-f0cc5d6a45f8/msodbcsql18_18.4.1.1-1_$architecture.sig
+curl -O https://download.microsoft.com/download/7/6/d/76de322a-d860-4894-9945-f0cc5d6a45f8/mssql-tools18_18.4.1.1-1_$architecture.sig
 
-# # Install pyodbc and other dependencies
-# echo "Installing pyodbc..."
-# pip install pyodbc
+curl https://packages.microsoft.com/keys/microsoft.asc  | gpg --import -
+gpg --verify msodbcsql18_18.4.1.1-1_$architecture.sig msodbcsql18_18.4.1.1-1_$architecture.apk
+gpg --verify mssql-tools18_18.4.1.1-1_$architecture.sig mssql-tools18_18.4.1.1-1_$architecture.apk
+
+#Install the package(s)
+apk add --allow-untrusted msodbcsql18_18.4.1.1-1_$architecture.apk
+apk add --allow-untrusted mssql-tools18_18.4.1.1-1_$architecture.apk
 
 # Install Python dependencies from requirements.txt
 echo "Installing Python dependencies from requirements.txt..."
