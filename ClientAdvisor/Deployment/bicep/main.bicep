@@ -227,8 +227,6 @@ module appserviceModule 'deploy_app_service.bicep' = {
     STREAMING_AZUREFUNCTION_ENDPOINT: azureFunctionURL.outputs.functionAppUrl
     SQLDB_SERVER:sqlDBModule.outputs.sqlDbOutput.sqlServerName
     SQLDB_DATABASE:sqlDBModule.outputs.sqlDbOutput.sqlDbName
-    SQLDB_USERNAME:sqlDBModule.outputs.sqlDbOutput.sqlDbUser
-    SQLDB_PASSWORD:sqlDBModule.outputs.sqlDbOutput.sqlDbPwd
     AZURE_COSMOSDB_ACCOUNT: cosmosDBModule.outputs.cosmosOutput.cosmosAccountName
     AZURE_COSMOSDB_CONVERSATIONS_CONTAINER: cosmosDBModule.outputs.cosmosOutput.cosmosContainerName
     AZURE_COSMOSDB_DATABASE: cosmosDBModule.outputs.cosmosOutput.cosmosDatabaseName
