@@ -22,14 +22,14 @@ try:
     database = get_secrets_from_kv(key_vault_name, "SQLDB-DATABASE")
     print(f"Server: {server}, Database: {database}")  # Debug info
     # Managed Identity-based authentication
-    authentication = 'ActiveDirectoryMsi'
+    authentication = 'ActiveDirectoryManagedIdentity'
 
     # Connection string for SQL Server using Managed Identity
     conn_string = (
         f'Driver={{ODBC Driver 17 for SQL Server}};'
         f'Server=tcp:{server},1433;'
         f'Database={database};'
-        f'UID={managed_identity_client_id};'
+        f'ClientId={managed_identity_client_id};'
         f'Authentication={authentication};'
         f'Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;'
     )
