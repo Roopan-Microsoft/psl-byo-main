@@ -74,7 +74,7 @@ with get_conn() as conn:
     df = pd.read_csv(csv_file, encoding='utf-8')
 
     for index, item in df.iterrows():
-        cursor.execute(f"INSERT INTO Clients (ClientId,Client, Email, Occupation, MaritalStatus, Dependents) VALUES (%s,%s,%s,%s,%s,%s)", (item.ClientId, item.Client, item.Email, item.Occupation, item.MaritalStatus, item.Dependents))
+        cursor.execute(f"INSERT INTO Clients (ClientId,Client, Email, Occupation, MaritalStatus, Dependents) VALUES (?,?,?,?,?,?)", (item.ClientId, item.Client, item.Email, item.Occupation, item.MaritalStatus, item.Dependents))
     conn.commit()
 
 
@@ -147,7 +147,7 @@ with get_conn() as conn:
 
 
     for index, item in df.iterrows():
-        cursor.execute(f"INSERT INTO Assets (ClientId,AssetDate, Investment, ROI, Revenue, AssetType) VALUES (%s,%s,%s,%s,%s,%s)", (item.ClientId, item.AssetDate, item.Investment, item.ROI, item.Revenue, item.AssetType))
+        cursor.execute(f"INSERT INTO Assets (ClientId,AssetDate, Investment, ROI, Revenue, AssetType) VALUES (?,?,?,?,?,?)", (item.ClientId, item.AssetDate, item.Investment, item.ROI, item.Revenue, item.AssetType))
     conn.commit()
 
 
@@ -171,7 +171,7 @@ with get_conn() as conn:
     df['ClientId'] = df['ClientId'].astype(int)
 
     for index, item in df.iterrows():
-        cursor.execute(f"INSERT INTO InvestmentGoals (ClientId,InvestmentGoal) VALUES (%s,%s)", (item.ClientId, item.InvestmentGoal))
+        cursor.execute(f"INSERT INTO InvestmentGoals (ClientId,InvestmentGoal) VALUES (?,?)", (item.ClientId, item.InvestmentGoal))
     conn.commit()
 
 
@@ -196,7 +196,7 @@ with get_conn() as conn:
     df['ClientId'] = df['ClientId'].astype(int)
 
     for index, item in df.iterrows():
-        cursor.execute(f"INSERT INTO InvestmentGoalsDetails (ClientId,InvestmentGoal, TargetAmount, Contribution) VALUES (%s,%s,%s,%s)", (item.ClientId, item.InvestmentGoal, item.TargetAmount, item.Contribution))
+        cursor.execute(f"INSERT INTO InvestmentGoalsDetails (ClientId,InvestmentGoal, TargetAmount, Contribution) VALUES (?,?,?,?)", (item.ClientId, item.InvestmentGoal, item.TargetAmount, item.Contribution))
     conn.commit()
 
     #ClientSummaries
@@ -219,7 +219,7 @@ with get_conn() as conn:
     df['ClientId'] = df['ClientId'].astype(int)
 
     for index, item in df.iterrows():
-        cursor.execute(f"INSERT INTO ClientSummaries (ClientId,ClientSummary) VALUES (%s,%s)", (item.ClientId, item.ClientSummary))
+        cursor.execute(f"INSERT INTO ClientSummaries (ClientId,ClientSummary) VALUES (?,?)", (item.ClientId, item.ClientSummary))
     conn.commit()
 
     # Retirement
@@ -253,7 +253,7 @@ with get_conn() as conn:
     df['StatusDate'] = pd.to_datetime(df['StatusDate']).dt.date
 
     for index, item in df.iterrows():
-        cursor.execute(f"INSERT INTO Retirement (ClientId,StatusDate, RetirementGoalProgress, EducationGoalProgress) VALUES (%s,%s,%s,%s)", (item.ClientId, item.StatusDate, item.RetirementGoalProgress, item.EducationGoalProgress))
+        cursor.execute(f"INSERT INTO Retirement (ClientId,StatusDate, RetirementGoalProgress, EducationGoalProgress) VALUES (?,?,?,?)", (item.ClientId, item.StatusDate, item.RetirementGoalProgress, item.EducationGoalProgress))
     conn.commit()
 
 
@@ -294,7 +294,7 @@ with get_conn() as conn:
 
     for index, item in df.iterrows():
         
-        cursor.execute(f"INSERT INTO ClientMeetings (ClientId,ConversationId,Title,StartTime,EndTime,Advisor,ClientEmail) VALUES (%s,%s,%s,%s,%s,%s,%s)", (item.ClientId, item.ConversationId, item.Title, item.StartTime, item.EndTime, item.Advisor, item.ClientEmail))
+        cursor.execute(f"INSERT INTO ClientMeetings (ClientId,ConversationId,Title,StartTime,EndTime,Advisor,ClientEmail) VALUES (?,?,?,?,?,?,?)", (item.ClientId, item.ConversationId, item.Title, item.StartTime, item.EndTime, item.Advisor, item.ClientEmail))
     conn.commit()
 
 
@@ -315,5 +315,5 @@ with get_conn() as conn:
     df['ConversationId'] = ''
 
     for index, item in df.iterrows():
-        cursor.execute(f"INSERT INTO ClientMeetings (ClientId,ConversationId,Title,StartTime,EndTime,Advisor,ClientEmail) VALUES (%s,%s,%s,%s,%s,%s,%s)", (item.ClientId, item.ConversationId, item.Title, item.StartTime, item.EndTime, item.Advisor, item.ClientEmail))
+        cursor.execute(f"INSERT INTO ClientMeetings (ClientId,ConversationId,Title,StartTime,EndTime,Advisor,ClientEmail) VALUES (?,?,?,?,?,?,?)", (item.ClientId, item.ConversationId, item.Title, item.StartTime, item.EndTime, item.Advisor, item.ClientEmail))
     conn.commit()
