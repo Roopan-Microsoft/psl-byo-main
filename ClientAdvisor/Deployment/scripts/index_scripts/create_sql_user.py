@@ -48,7 +48,17 @@ try:
     # Establish the connection
     with get_conn() as conn:
         cursor = conn.cursor()
-        # Do something with the data
+        # SQL commands to create user and assign roles
+        create_user_sql = f"""
+        CREATE USER [{user_name}] FROM EXTERNAL PROVIDER;
+        ALTER ROLE db_datareader ADD MEMBER [{user_name}];
+        ALTER ROLE db_datawriter ADD MEMBER [{user_name}];
+        ALTER ROLE db_ddladmin ADD MEMBER [{user_name}];
+        """
+
+        # Execute SQL commands
+        cursor.execute(create_user_sql)
+        conn.commit()
     print("Connection established successfully")  # Debug info
 
 # cursor = conn.cursor()
