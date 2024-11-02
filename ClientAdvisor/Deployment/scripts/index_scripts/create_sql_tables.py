@@ -27,7 +27,7 @@ database = get_secrets_from_kv(key_vault_name,"SQLDB-DATABASE")
 
 # Connection string for SQL Server using Managed Identity
 connection_string = (
-    f'Driver={{ODBC Driver 17 for SQL Server}};'
+    f'Driver={{ODBC Driver 18 for SQL Server}};'
     f'Server=tcp:{server},1433;'
     f'Database={database};'
     f'Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;'
