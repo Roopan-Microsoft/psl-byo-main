@@ -14,24 +14,22 @@ param sqlDBName string = '${ solutionName }-sql-db'
 @description('Location for all resources.')
 param location string = solutionLocation
 
-@description('The administrator username of the SQL logical server.')
-param administratorLogin string = 'sqladmin'
-
-@description('The administrator password of the SQL logical server.')
-@secure()
-param administratorLoginPassword string = 'TestPassword_1234'
-
 resource sqlServer 'Microsoft.Sql/servers@2023-08-01-preview' = {
   name: serverName
   location: location
   kind:'v12.0'
   properties: {
-      administratorLogin: administratorLogin
-      administratorLoginPassword: administratorLoginPassword
-      publicNetworkAccess: 'Enabled'
-      version: '12.0'
-      restrictOutboundNetworkAccess: 'Disabled'
+    publicNetworkAccess: 'Enabled'
+    version: '12.0'
+    restrictOutboundNetworkAccess: 'Disabled'
+    administrators: {
+      administratorType: 'ActiveDirectory'
+      login: managedIdentity.name 
+      sid: managedIdentityObjectId  // Use the Managed Identity's Object ID as the SID
+      tenantId: '52b39610-0746-4c25-a83d-d4f89fadedfe'  // Replace with your tenant ID
+      azureADOnlyAuthentication: true
     }
+  }
 }
 
 resource firewallRule 'Microsoft.Sql/servers/firewallRules@2023-08-01-preview' = {
@@ -72,9 +70,12 @@ resource sqlDB 'Microsoft.Sql/servers/databases@2023-08-01-preview' = {
   }
 }
 
+resource managedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' existing = {
+  scope: resourceGroup()
+  name: managedIdentityObjectId
+}
+
 output sqlDbOutput object = {
   sqlServerName: '${serverName}.database.windows.net' 
   sqlDbName: sqlDBName
-  sqlDbUser: administratorLogin
-  sqlDbPwd: administratorLoginPassword
 }

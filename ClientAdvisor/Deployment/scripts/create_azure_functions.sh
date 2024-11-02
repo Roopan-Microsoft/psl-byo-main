@@ -13,8 +13,6 @@ azureSearchServiceEndpoint="$9"
 azureSearchIndex="${10}"
 sqlServerName="${11}"
 sqlDbName="${12}"
-sqlDbUser="${13}"
-sqlDbPwd="${14}"
 functionAppVersion="${15}"
 
 azureOpenAIDeploymentModel="gpt-4"
@@ -51,4 +49,4 @@ az functionapp config appsettings set --name $functionappname -g $resourceGroupN
                 AZURE_SEARCH_INDEX=$azureSearchIndex \
                 PYTHON_ENABLE_INIT_INDEXING=$valueone PYTHON_ISOLATE_WORKER_DEPENDENCIES=$valueone \
                 SQLDB_CONNECTION_STRING=$sqlDBConn \
-                SQLDB_SERVER=$sqlServerName SQLDB_DATABASE=$sqlDbName SQLDB_USERNAME=$sqlDbUser SQLDB_PASSWORD=$sqlDbPwd             
+                SQLDB_SERVER=$sqlServerName SQLDB_DATABASE=$sqlDbName             

@@ -116,8 +116,6 @@ module azureFunctions 'deploy_azure_function_script.bicep' = {
     azureSearchIndex:'transcripts_index'
     sqlServerName:sqlDBModule.outputs.sqlDbOutput.sqlServerName
     sqlDbName:sqlDBModule.outputs.sqlDbOutput.sqlDbName
-    sqlDbUser:sqlDBModule.outputs.sqlDbOutput.sqlDbUser
-    sqlDbPwd:sqlDBModule.outputs.sqlDbOutput.sqlDbPwd
     identity:managedIdentityModule.outputs.managedIdentityOutput.id
     baseUrl:baseUrl
     functionAppVersion: functionAppversion
@@ -159,8 +157,6 @@ module keyvaultModule 'deploy_keyvault.bicep' = {
     cogServiceKey:azAIMultiServiceAccount.outputs.cogSearchOutput.cogServiceKey
     sqlServerName:sqlDBModule.outputs.sqlDbOutput.sqlServerName
     sqlDbName:sqlDBModule.outputs.sqlDbOutput.sqlDbName
-    sqlDbUser:sqlDBModule.outputs.sqlDbOutput.sqlDbUser
-    sqlDbPwd:sqlDBModule.outputs.sqlDbOutput.sqlDbPwd
     enableSoftDelete:false
   }
   scope: resourceGroup(resourceGroup().name)

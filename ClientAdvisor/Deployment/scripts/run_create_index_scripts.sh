@@ -13,12 +13,17 @@ echo "Script Started"
 curl --output "create_search_index.py" ${baseUrl}"Deployment/scripts/index_scripts/create_search_index.py"
 curl --output "create_sql_tables.py" ${baseUrl}"Deployment/scripts/index_scripts/create_sql_tables.py"
 
-# RUN apt-get update
-# RUN apt-get install python3 python3-dev g++ unixodbc-dev unixodbc libpq-dev
-# apk add python3 python3-dev g++ unixodbc-dev unixodbc libpq-dev
- 
-# # RUN apt-get install python3 python3-dev g++ unixodbc-dev unixodbc libpq-dev
-# pip install pyodbc
+# Install system dependencies for pyodbc
+echo "Installing system packages..."
+apk add --no-cache --virtual .build-deps \
+    build-base \
+    unixodbc-dev
+#Download the desired package(s)
+curl -O https://download.microsoft.com/download/7/6/d/76de322a-d860-4894-9945-f0cc5d6a45f8/msodbcsql18_18.4.1.1-1_amd64.apk
+curl -O https://download.microsoft.com/download/7/6/d/76de322a-d860-4894-9945-f0cc5d6a45f8/mssql-tools18_18.4.1.1-1_amd64.apk
+#Install the package(s)
+apk add --allow-untrusted msodbcsql18_18.4.1.1-1_amd64.apk
+apk add --allow-untrusted mssql-tools18_18.4.1.1-1_amd64.apk
 
 # Download the requirement file
 curl --output "$requirementFile" "$requirementFileUrl"
