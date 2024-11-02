@@ -27,7 +27,7 @@ try:
 
     # Connection string for SQL Server using Managed Identity
     conn_string = (
-        f'Driver={{ODBC Driver 18 for SQL Server}};'
+        f'Driver={{ODBC Driver 17 for SQL Server}};'
         f'Server={server},1433;'
         f'Database={database};'
         f'UID={managed_identity_client_id};'
