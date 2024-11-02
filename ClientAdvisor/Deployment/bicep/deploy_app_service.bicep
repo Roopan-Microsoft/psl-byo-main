@@ -137,13 +137,6 @@ param SQLDB_SERVER string = ''
 @description('SQL Database Name')
 param SQLDB_DATABASE string = ''
 
-@description('SQL Database Username')
-param SQLDB_USERNAME string = ''
-
-@description('SQL Database Password')
-@secure()
-param SQLDB_PASSWORD string = ''
-
 @description('Azure Cosmos DB Account')
 param AZURE_COSMOSDB_ACCOUNT string = ''
 
@@ -334,14 +327,6 @@ resource Website 'Microsoft.Web/sites@2020-06-01' = {
 
         {name: 'SQLDB_DATABASE'
           value: SQLDB_DATABASE
-        }
-
-        {name: 'SQLDB_USERNAME'
-          value: SQLDB_USERNAME
-        }
-
-        {name: 'SQLDB_PASSWORD'
-          value: SQLDB_PASSWORD
         }
 
         {name: 'USE_AZUREFUNCTION'
