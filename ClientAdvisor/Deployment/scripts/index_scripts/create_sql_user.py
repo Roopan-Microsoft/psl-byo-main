@@ -23,7 +23,6 @@ try:
     print(f"Server: {server}, Database: {database}")  # Debug info
     # Managed Identity-based authentication
     authentication = 'ActiveDirectoryMsi'
-    managed_identity_client_id='92f4c3bc-0970-4319-ab47-13ed3becb3ea'
 
     # Connection string for SQL Server using Managed Identity
     conn_string = (
