@@ -58,6 +58,7 @@ module sqlDBModule 'deploy_sql_db.bicep' = {
     solutionName: solutionPrefix
     solutionLocation: solutionLocation
     managedIdentityObjectId:managedIdentityModule.outputs.managedIdentityOutput.objectId
+    tenantId: subscription().tenantId
   }
   scope: resourceGroup(resourceGroup().name)
 }

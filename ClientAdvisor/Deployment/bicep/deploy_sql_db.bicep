@@ -4,6 +4,7 @@
 param solutionName string
 param solutionLocation string
 param managedIdentityObjectId string
+param tenantId string
 
 @description('The name of the SQL logical server.')
 param serverName string = '${ solutionName }-sql-server'
@@ -26,7 +27,7 @@ resource sqlServer 'Microsoft.Sql/servers@2023-08-01-preview' = {
       administratorType: 'ActiveDirectory'
       login: managedIdentity.name 
       sid: managedIdentityObjectId  // Use the Managed Identity's Object ID as the SID
-      tenantId: '52b39610-0746-4c25-a83d-d4f89fadedfe'  // Replace with your tenant ID
+      tenantId: tenantId
       azureADOnlyAuthentication: true
     }
   }
