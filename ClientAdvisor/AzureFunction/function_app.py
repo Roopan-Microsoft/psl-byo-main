@@ -136,8 +136,14 @@ class ChatWithDataPlugin:
             sql_query = completion.choices[0].message.content
             sql_query = sql_query.replace("```sql",'').replace("```",'')
         
-            connection_string = os.environ.get("SQLDB_CONNECTION_STRING")
-
+            server = os.environ.get("SQLDB_SERVER")
+            database = os.environ.get("SQLDB_DATABASE")
+            connection_string = (
+                f'Driver={{ODBC Driver 18 for SQL Server}};'
+                f'Server=tcp:{server},1433;'
+                f'Database={database};'
+                f'Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;'
+            )
             conn = get_connection(connection_string)
             cursor = conn.cursor()
             cursor.execute(sql_query)

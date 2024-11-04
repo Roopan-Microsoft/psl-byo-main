@@ -23,8 +23,6 @@ storageAccount=${solutionName}"fnstorage"
 functionappname=${solutionName}"fn"
 valueone="1"
 
-sqlDBConn="DRIVER={ODBC Driver 18 for SQL Server};SERVER=tcp:${sqlServerName},1433;DATABASE=${sqlDbName};Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;"
-
 az containerapp env create --name $env_name --enable-workload-profiles --resource-group $resourceGroupName --location $solutionLocation
 
 az storage account create --name $storageAccount --location eastus --resource-group $resourceGroupName --sku Standard_LRS
@@ -45,4 +43,4 @@ az functionapp config appsettings set --name $functionappname -g $resourceGroupN
                 AZURE_AI_SEARCH_API_KEY=$azureSearchAdminKey AZURE_AI_SEARCH_ENDPOINT=$azureSearchServiceEndpoint \
                 AZURE_SEARCH_INDEX=$azureSearchIndex \
                 PYTHON_ENABLE_INIT_INDEXING=$valueone PYTHON_ISOLATE_WORKER_DEPENDENCIES=$valueone \
-                SQLDB_CONNECTION_STRING=$sqlDBConn            
+                SQLDB_SERVER=$sqlServerName SQLDB_DATABASE=$sqlDbName            
