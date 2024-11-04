@@ -3,6 +3,9 @@ import openai
 from azurefunctions.extensions.http.fastapi import Request, StreamingResponse
 import asyncio
 import os
+import struct
+import pyodbc
+from azure.identity import DefaultAzureCredential
 
 from typing import Annotated
 
@@ -30,6 +33,14 @@ temperature = 0
 
 search_endpoint = os.environ.get("AZURE_AI_SEARCH_ENDPOINT") 
 search_key = os.environ.get("AZURE_AI_SEARCH_API_KEY")
+
+def get_connection(connection_string):
+        credential = DefaultAzureCredential(exclude_interactive_browser_credential=False)
+        token_bytes = credential.get_token("https://database.windows.net/.default").token.encode("UTF-16-LE")
+        token_struct = struct.pack(f'<I{len(token_bytes)}s', len(token_bytes), token_bytes)
+        SQL_COPT_SS_ACCESS_TOKEN = 1256  # This connection option is defined by microsoft in msodbcsql.h
+        conn = pyodbc.connect(connection_string, attrs_before={SQL_COPT_SS_ACCESS_TOKEN: token_struct})
+        return conn
 
 class ChatWithDataPlugin:
     @kernel_function(name="Greeting", description="Respond to any greeting or general questions")
@@ -72,7 +83,6 @@ class ChatWithDataPlugin:
         query = input
         endpoint = os.environ.get("AZURE_OPEN_AI_ENDPOINT")
         api_key = os.environ.get("AZURE_OPEN_AI_API_KEY")
-
 
         client = openai.AzureOpenAI(
             azure_endpoint=endpoint,
@@ -125,16 +135,10 @@ class ChatWithDataPlugin:
             )
             sql_query = completion.choices[0].message.content
             sql_query = sql_query.replace("```sql",'').replace("```",'')
-            #print(sql_query)
         
-            connectionString = os.environ.get("SQLDB_CONNECTION_STRING")
-            server = os.environ.get("SQLDB_SERVER")
-            database = os.environ.get("SQLDB_DATABASE")
-            username = os.environ.get("SQLDB_USERNAME")
-            password = os.environ.get("SQLDB_PASSWORD")
+            connection_string = os.environ.get("SQLDB_CONNECTION_STRING")
 
-            conn = pymssql.connect(server, username, password, database)
-            # conn = pyodbc.connect(connectionString)
+            conn = get_connection(connection_string)
             cursor = conn.cursor()
             cursor.execute(sql_query)
             answer = ''
@@ -230,6 +234,7 @@ class ChatWithDataPlugin:
 
         answer = completion.choices[0].message.content
         return answer
+    
 
 # Get data from Azure Open AI
 async def stream_processor(response):
