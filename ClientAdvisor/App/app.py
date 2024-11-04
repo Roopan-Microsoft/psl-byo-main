@@ -1596,7 +1596,7 @@ def get_users():
             rows = cursor.fetchall()
             ndays = 0
             for row in rows:
-                ndays = row["ndays"]
+                ndays = row.ndays
             sql_stmt1 = f"UPDATE ClientMeetings SET StartTime = dateadd(day,{ndays},StartTime), EndTime = dateadd(day,{ndays},EndTime)"
             cursor.execute(sql_stmt1)
             conn.commit()
@@ -1620,17 +1620,17 @@ def get_users():
         for row in rows:
             # print(row)
             user = {
-                "ClientId": row["ClientId"],
-                "ClientName": row["Client"],
-                "ClientEmail": row["Email"],
-                "AssetValue": row["AssetValue"],
-                "NextMeeting": row["NextMeetingFormatted"],
-                "NextMeetingTime": row["NextMeetingStartTime"],
-                "NextMeetingEndTime": row["NextMeetingEndTime"],
-                "LastMeeting": row["LastMeetingDateFormatted"],
-                "LastMeetingStartTime": row["LastMeetingStartTime"],
-                "LastMeetingEndTime": row["LastMeetingEndTime"],
-                "ClientSummary": row["ClientSummary"],
+                "ClientId": row.ClientId,
+                "ClientName": row.Client,
+                "ClientEmail": row.Email,
+                "AssetValue": row.AssetValue,
+                "NextMeeting": row.NextMeetingFormatted,
+                "NextMeetingTime": row.NextMeetingStartTime,
+                "NextMeetingEndTime": row.NextMeetingEndTime,
+                "LastMeeting": row.LastMeetingDateFormatted,
+                "LastMeetingStartTime": row.LastMeetingStartTime,
+                "LastMeetingEndTime": row.LastMeetingEndTime,
+                "ClientSummary": row.ClientSummary,
             }
             users.append(user)
             # print(users)
