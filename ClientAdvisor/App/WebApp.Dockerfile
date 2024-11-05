@@ -15,10 +15,16 @@ RUN apk add --no-cache --virtual .build-deps \
     build-base \  
     libffi-dev \  
     openssl-dev \  
-    curl \  
+    curl \
+    unixodbc-dev \  
     && apk add --no-cache \  
-    libpq 
-    # python3 python3-dev g++ unixodbc-dev unixodbc libpq-dev
+    libpq \
+    # Download and install the ODBC Driver and mssql-tools
+    && curl -O https://download.microsoft.com/download/7/6/d/76de322a-d860-4894-9945-f0cc5d6a45f8/msodbcsql18_18.4.1.1-1_amd64.apk \
+    && curl -O https://download.microsoft.com/download/7/6/d/76de322a-d860-4894-9945-f0cc5d6a45f8/mssql-tools18_18.4.1.1-1_amd64.apk \
+    && apk add --allow-untrusted msodbcsql18_18.4.1.1-1_amd64.apk \
+    && apk add --allow-untrusted mssql-tools18_18.4.1.1-1_amd64.apk \
+    && rm msodbcsql18_18.4.1.1-1_amd64.apk mssql-tools18_18.4.1.1-1_amd64.apk
   
 COPY requirements.txt /usr/src/app/  
 RUN pip install --no-cache-dir -r /usr/src/app/requirements.txt \  
