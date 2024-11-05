@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.30.23.60470",
-      "templateHash": "13352015455611543098"
+      "templateHash": "12156481597181924313"
     }
   },
   "parameters": {
@@ -28,7 +28,7 @@
     "resourceGroupLocation": "[resourceGroup().location]",
     "resourceGroupName": "[resourceGroup().name]",
     "solutionLocation": "[variables('resourceGroupLocation')]",
-    "baseUrl": "https://raw.githubusercontent.com/Roopan-Microsoft/psl-byo-main/main/ClientAdvisor/",
+    "baseUrl": "https://raw.githubusercontent.com/Roopan-Microsoft/psl-byo-main/PSL-US-8935-ManagedIdentitySQL/ClientAdvisor/",
     "functionAppversion": "dev"
   },
   "resources": [
@@ -457,6 +457,9 @@
           },
           "managedIdentityObjectId": {
             "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, resourceGroup().name), 'Microsoft.Resources/deployments', 'deploy_managed_identity'), '2022-09-01').outputs.managedIdentityOutput.value.objectId]"
+          },
+          "tenantId": {
+            "value": "[subscription().tenantId]"
           }
         },
         "template": {
@@ -466,7 +469,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.30.23.60470",
-              "templateHash": "10140800683236346166"
+              "templateHash": "7217265191808006821"
             }
           },
           "parameters": {
@@ -482,6 +485,9 @@
               "type": "string"
             },
             "managedIdentityObjectId": {
+              "type": "string"
+            },
+            "tenantId": {
               "type": "string"
             },
             "serverName": {
@@ -521,7 +527,7 @@
                   "administratorType": "ActiveDirectory",
                   "login": "[parameters('managedIdentityObjectId')]",
                   "sid": "[parameters('managedIdentityObjectId')]",
-                  "tenantId": "52b39610-0746-4c25-a83d-d4f89fadedfe",
+                  "tenantId": "[parameters('tenantId')]",
                   "azureADOnlyAuthentication": true
                 }
               }
@@ -1918,7 +1924,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.30.23.60470",
-              "templateHash": "3306232384194992378"
+              "templateHash": "9874083265878970231"
             }
           },
           "parameters": {
@@ -2236,20 +2242,6 @@
                 "description": "SQL Database Name"
               }
             },
-            "SQLDB_USERNAME": {
-              "type": "string",
-              "defaultValue": "",
-              "metadata": {
-                "description": "SQL Database Username"
-              }
-            },
-            "SQLDB_PASSWORD": {
-              "type": "securestring",
-              "defaultValue": "",
-              "metadata": {
-                "description": "SQL Database Password"
-              }
-            },
             "AZURE_COSMOSDB_ACCOUNT": {
               "type": "string",
               "defaultValue": "",
@@ -2294,7 +2286,7 @@
             }
           },
           "variables": {
-            "WebAppImageName": "DOCKER|bycwacontainerreg.azurecr.io/byc-wa-app:dev"
+            "WebAppImageName": "DOCKER|byocgacontainerregpk.azurecr.io/byc-wa-app:dev"
           },
           "resources": [
             {
@@ -2462,14 +2454,6 @@
                     {
                       "name": "SQLDB_DATABASE",
                       "value": "[parameters('SQLDB_DATABASE')]"
-                    },
-                    {
-                      "name": "SQLDB_USERNAME",
-                      "value": "[parameters('SQLDB_USERNAME')]"
-                    },
-                    {
-                      "name": "SQLDB_PASSWORD",
-                      "value": "[parameters('SQLDB_PASSWORD')]"
                     },
                     {
                       "name": "USE_AZUREFUNCTION",

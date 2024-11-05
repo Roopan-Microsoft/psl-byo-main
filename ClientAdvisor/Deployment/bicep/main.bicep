@@ -17,7 +17,7 @@ var resourceGroupName = resourceGroup().name
 // var subscriptionId  = subscription().subscriptionId
 
 var solutionLocation = resourceGroupLocation
-var baseUrl = 'https://raw.githubusercontent.com/Roopan-Microsoft/psl-byo-main/main/ClientAdvisor/'
+var baseUrl = 'https://raw.githubusercontent.com/Roopan-Microsoft/psl-byo-main/PSL-US-8935-ManagedIdentitySQL/ClientAdvisor/'
 var functionAppversion = 'dev'
 
 // ========== Managed Identity ========== //
