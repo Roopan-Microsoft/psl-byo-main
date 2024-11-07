@@ -8,6 +8,7 @@ from azure.ai.ml.entities import (
     ApiKeyConfiguration,
     AzureAISearchConnection,
     AzureOpenAIConnection,
+    IdentityConfiguration
 )
 from azure.keyvault.secrets import SecretClient
 from azure.identity import DefaultAzureCredential
@@ -70,8 +71,13 @@ ml_client = MLClient(
     credential=credential,
 )
 
+# Define the identity configuration
+identity_configuration = IdentityConfiguration(
+    type="SystemAssigned" 
+)
+
 # construct a hub
-my_hub = Hub(name=aihub_name, location=solutionLocation, display_name=aihub_name)
+my_hub = Hub(name=aihub_name, location=solutionLocation, display_name=aihub_name, identity=identity_configuration)
 
 created_hub = ml_client.workspaces.begin_create(my_hub).result()
 
