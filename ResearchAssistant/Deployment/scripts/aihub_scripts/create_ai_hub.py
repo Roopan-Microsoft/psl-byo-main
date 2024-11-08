@@ -7,7 +7,8 @@ from azure.ai.ml.entities import (
     Project,
     ApiKeyConfiguration,
     AzureAISearchConnection,
-    AzureOpenAIConnection
+    AzureOpenAIConnection,
+    AzureBlobDatastore
 )
 from azure.keyvault.secrets import SecretClient
 from azure.identity import DefaultAzureCredential
@@ -36,6 +37,10 @@ aihub_name = 'ai_hub_' + 'solutionname_to-be-replaced'
 project_name = 'ai_project_' + 'solutionname_to-be-replaced'
 deployment_name = 'draftsinference-' + 'solutionname_to-be-replaced'
 solutionLocation = 'solutionlocation_to-be-replaced'
+azure_blob_data_store = aihub_name + 'azure-blob-data-store'
+storage_account_name= aihub_name + '-storage-account',
+container_name= aihub_name + '-azureml-blobstore'
+
 
 # Open AI Details
 open_ai_key = get_secrets_from_kv(key_vault_name, "AZURE-OPENAI-KEY")
@@ -69,6 +74,15 @@ ml_client = MLClient(
     subscription_id=subscription_id,
     credential=credential,
 )
+
+store = AzureBlobDatastore(
+    name= azure_blob_data_store,
+    description= azure_blob_data_store,
+    account_name= storage_account_name,
+    container_name= container_name
+)
+
+ml_client.create_or_update(store)
 
 # construct a hub
 my_hub = Hub(name=aihub_name, location=solutionLocation, display_name=aihub_name)
