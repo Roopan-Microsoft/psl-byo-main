@@ -75,11 +75,13 @@ ml_client = MLClient(
     credential=credential,
 )
 
+# Create an AzureBlobDatastore using identity-based authentication
 store = AzureBlobDatastore(
-    name= azure_blob_data_store,
-    description= azure_blob_data_store,
-    account_name= storage_account_name,
-    container_name= container_name
+    name=azure_blob_data_store,
+    description=azure_blob_data_store,
+    account_name=storage_account_name,
+    container_name=container_name,
+    credential=credential  # Ensures identity-based access
 )
 
 ml_client.create_or_update(store)
