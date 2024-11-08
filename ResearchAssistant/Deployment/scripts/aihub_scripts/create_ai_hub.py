@@ -75,13 +75,12 @@ ml_client = MLClient(
     credential=credential,
 )
 
-# Create an AzureBlobDatastore using identity-based authentication
+# Initialize the AzureBlobDatastore without a trailing comma in the parameter list
 store = AzureBlobDatastore(
     name=azure_blob_data_store,
     description=azure_blob_data_store,
     account_name=storage_account_name,
-    container_name=container_name,
-    credential=credential  # Ensures identity-based access
+    container_name=container_name
 )
 
 ml_client.create_or_update(store)
