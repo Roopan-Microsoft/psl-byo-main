@@ -8,7 +8,7 @@ from azure.ai.ml.entities import (
     ApiKeyConfiguration,
     AzureAISearchConnection,
     AzureOpenAIConnection,
-    AzureBlobDatastore
+    IdentityConfiguration
 )
 from azure.keyvault.secrets import SecretClient
 from azure.identity import DefaultAzureCredential
@@ -37,9 +37,7 @@ aihub_name = 'ai_hub_' + 'solutionname_to-be-replaced'
 project_name = 'ai_project_' + 'solutionname_to-be-replaced'
 deployment_name = 'draftsinference-' + 'solutionname_to-be-replaced'
 solutionLocation = 'solutionlocation_to-be-replaced'
-azure_blob_data_store = aihub_name + 'azure-blob-data-store'
-storage_account_name= aihub_name + '-storage-account',
-container_name= aihub_name + '-azureml-blobstore'
+storageaccountName = 'solutionlocation_to-be-replaced' + 'storageaccount'
 
 
 # Open AI Details
@@ -67,6 +65,8 @@ ai_search_key = get_secrets_from_kv(key_vault_name, "AZURE-SEARCH-KEY")
 # Credentials
 credential = DefaultAzureCredential()
 
+identity_configuration = IdentityConfiguration(type="SystemAssigned")
+
 # Create an ML client
 ml_client = MLClient(
     workspace_name=aihub_name,
@@ -76,20 +76,9 @@ ml_client = MLClient(
 )
 
 # construct a hub
-my_hub = Hub(name=aihub_name, location=solutionLocation, display_name=aihub_name)
+my_hub = Hub(name=aihub_name, location=solutionLocation, display_name=aihub_name, storage_account=storageaccountName, identity=identity_configuration)
 
 created_hub = ml_client.workspaces.begin_create(my_hub).result()
-
-# Initialize the AzureBlobDatastore without a trailing comma in the parameter list
-store = AzureBlobDatastore(
-    name=azure_blob_data_store,
-    description=azure_blob_data_store,
-    account_name=storage_account_name,
-    container_name=container_name,
-    credential=credential,
-)
-
-ml_client.create_or_update(store)
 
 # construct the project
 my_project = Project(
