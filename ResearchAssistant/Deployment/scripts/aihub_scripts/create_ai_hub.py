@@ -79,7 +79,7 @@ ml_client = MLClient(
 )
 
 # construct a hub
-my_hub = Hub(name=aihub_name, location=solutionLocation, display_name=aihub_name)
+my_hub = Hub(name=aihub_name, location=solutionLocation, display_name=aihub_name, storage_account=storageaccountId)
 
 created_hub = ml_client.workspaces.begin_create(my_hub).result()
 
