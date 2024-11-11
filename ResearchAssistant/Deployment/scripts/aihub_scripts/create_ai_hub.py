@@ -37,7 +37,7 @@ aihub_name = 'ai_hub_' + 'solutionname_to-be-replaced'
 project_name = 'ai_project_' + 'solutionname_to-be-replaced'
 deployment_name = 'draftsinference-' + 'solutionname_to-be-replaced'
 solutionLocation = 'solutionlocation_to-be-replaced'
-storageaccountName = 'solutionlocation_to-be-replaced' + 'storageaccount'
+storageaccountId = 'storageaccountid_to-be-replaced'
 
 
 # Open AI Details
@@ -76,7 +76,7 @@ ml_client = MLClient(
 )
 
 # construct a hub
-my_hub = Hub(name=aihub_name, location=solutionLocation, display_name=aihub_name, storage_account=storageaccountName, identity=identity_configuration)
+my_hub = Hub(name=aihub_name, location=solutionLocation, display_name=aihub_name, storage_account_id=storageaccountId)
 
 created_hub = ml_client.workspaces.begin_create(my_hub).result()
 

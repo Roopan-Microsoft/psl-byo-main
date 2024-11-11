@@ -137,6 +137,7 @@ module createIndex1 'deploy_aihub_scripts.bicep' = {
     solutionName: solutionPrefix
     resourceGroupName:resourceGroupName
     subscriptionId:subscriptionId
+    storageAccountId: storageAccountModule.outputs.storageAccountOutput.id
   }
   dependsOn:[keyvaultModule]
 }
