@@ -39,6 +39,9 @@ deployment_name = 'draftsinference-' + 'solutionname_to-be-replaced'
 solutionLocation = 'solutionlocation_to-be-replaced'
 storageaccountId = 'storageaccountid_to-be-replaced'
 
+print("-------Create AI HUB--------------")
+print(storageaccountId)
+print("-------Create AI HUB END--------------")
 
 # Open AI Details
 open_ai_key = get_secrets_from_kv(key_vault_name, "AZURE-OPENAI-KEY")
@@ -76,7 +79,7 @@ ml_client = MLClient(
 )
 
 # construct a hub
-my_hub = Hub(name=aihub_name, location=solutionLocation, display_name=aihub_name, storage_account_id=storageaccountId)
+my_hub = Hub(name=aihub_name, location=solutionLocation, display_name=aihub_name)
 
 created_hub = ml_client.workspaces.begin_create(my_hub).result()
 
