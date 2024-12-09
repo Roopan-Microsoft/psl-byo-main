@@ -1,4 +1,4 @@
-version: 2
+version: 2 
 updates:
   # 1. React (JavaScript/TypeScript) dependencies
   - package-ecosystem: "npm"
